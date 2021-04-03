@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewBreweryViewController" customModule="BreweryApp" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionTextField" destination="dwl-2J-HmC" id="BGX-m2-WuX"/>
+                <outlet property="imageBreweries" destination="yul-WH-r3Q" id="3ij-kX-F9V"/>
+                <outlet property="nameTexField" destination="0Iy-oA-Rpk" id="uBI-JY-jzX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="cta-Ti-Zyf">
+                    <rect key="frame" x="20" y="108" width="374" height="458"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="Photo" translatesAutoresizingMaskIntoConstraints="NO" id="yul-WH-r3Q">
+                            <rect key="frame" x="0.0" y="0.0" width="374" height="250"/>
+                            <color key="backgroundColor" systemColor="systemGray2Color"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="250" id="H60-sw-6Py"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-cp-REU">
+                            <rect key="frame" x="0.0" y="284" width="374" height="68"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="748" text="Название пивоварни" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cli-bK-Cac">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Название пивоварни" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Iy-oA-Rpk">
+                                    <rect key="frame" x="0.0" y="34" width="374" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="SqG-UI-ff7">
+                            <rect key="frame" x="0.0" y="386" width="374" height="72"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Описание" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6uG-eq-8yH">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="24"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Описание" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dwl-2J-HmC">
+                                    <rect key="frame" x="0.0" y="38" width="374" height="34"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="P0l-cp-REU" secondAttribute="trailing" id="2bG-65-mWI"/>
+                        <constraint firstItem="yul-WH-r3Q" firstAttribute="leading" secondItem="cta-Ti-Zyf" secondAttribute="leading" id="6T1-zw-9Eg"/>
+                        <constraint firstAttribute="trailing" secondItem="SqG-UI-ff7" secondAttribute="trailing" id="QBc-Fx-3f1"/>
+                        <constraint firstItem="SqG-UI-ff7" firstAttribute="leading" secondItem="cta-Ti-Zyf" secondAttribute="leading" id="n7f-Di-fqD"/>
+                        <constraint firstAttribute="trailing" secondItem="yul-WH-r3Q" secondAttribute="trailing" id="nKO-mx-tWM"/>
+                        <constraint firstItem="P0l-cp-REU" firstAttribute="leading" secondItem="cta-Ti-Zyf" secondAttribute="leading" id="pDl-sH-diS"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cta-Ti-Zyf" secondAttribute="trailing" constant="20" id="O0p-nZ-Ydz"/>
+                <constraint firstItem="cta-Ti-Zyf" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="WjU-Xc-kky"/>
+                <constraint firstItem="cta-Ti-Zyf" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Xru-yW-ycZ"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <point key="canvasLocation" x="34.782608695652179" y="121.875"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Photo" width="292" height="293.5"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

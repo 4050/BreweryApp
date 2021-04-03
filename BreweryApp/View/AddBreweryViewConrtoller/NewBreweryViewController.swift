@@ -1,0 +1,107 @@
+//
+//  NewBreweryViewController.swift
+//  BreweryApp
+//
+//  Created by Stanislav on 03.04.2021.
+//
+
+import UIKit
+
+class NewBreweryViewController: UIViewController {
+
+    @IBOutlet weak var imageBreweries: UIImageView!
+    @IBOutlet weak var nameTexField: UITextField!
+    @IBOutlet weak var descriptionTextField: UITextField!
+    
+    var imageIsChanged = false
+    private let breweryStorageModel: BreweryStorageModel
+    
+    
+    init(breweryStorageModel: BreweryStorageModel) {
+        self.breweryStorageModel = breweryStorageModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBrewery))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageBreweries.isUserInteractionEnabled = true
+        imageBreweries.addGestureRecognizer(tapGestureRecognizer)
+
+    }
+    
+    @objc func saveBrewery() {
+        
+        var image: UIImage?
+        
+        if imageIsChanged {
+            image = imageBreweries.image
+        } else {
+            image = #imageLiteral(resourceName: "imagePlaceholder")
+        }
+        
+        let imageData = image?.pngData()
+        
+        let brewery = Brewery(name: nameTexField.text, description: descriptionTextField.text, image: imageData)
+        
+        breweryStorageModel.saveBrewery(brewery: brewery)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+        dismiss(animated: true)
+    }
+    
+    @objc func cancelAction() {
+        dismiss(animated: true)
+    }
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+    
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        
+        let photo = UIAlertAction(title: "Photo", style: .default) { _ in
+            self.chooseImagePicker(source: .photoLibrary)
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+    
+        actionSheet.addAction(photo)
+        actionSheet.addAction(cancel)
+        
+        present(actionSheet, animated: true)
+    }
+
+}
+
+extension NewBreweryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func chooseImagePicker(source: UIImagePickerController.SourceType) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(source) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            present(imagePicker, animated: true)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        imageBreweries.image = info[.editedImage] as? UIImage
+        imageBreweries.contentMode = .scaleAspectFill
+        imageBreweries.clipsToBounds = true
+     
+        imageIsChanged = true
+        
+        dismiss(animated: true)
+    }
+}

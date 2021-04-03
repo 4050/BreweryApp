@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D64" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ManagedBeerGrade" representedClassName="ManagedBeerGrade" syncable="YES" codeGenerationType="class">
+        <attribute name="descriptionBG" optional="YES" attributeType="String"/>
+        <attribute name="imageBG" optional="YES" attributeType="Binary"/>
+        <attribute name="nameBG" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="ManagedBrewery" representedClassName="ManagedBrewery" syncable="YES" codeGenerationType="class">
+        <attribute name="descriptionBrewery" optional="YES" attributeType="String"/>
+        <attribute name="imageBrewery" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="nameBrewery" optional="YES" attributeType="String"/>
+        <relationship name="rowsBeerGrade" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ManagedBeerGrade"/>
+    </entity>
+    <elements>
+        <element name="ManagedBrewery" positionX="-185.0399780273438" positionY="-126.746826171875" width="246.5447387695312" height="89"/>
+        <element name="ManagedBeerGrade" positionX="-54" positionY="18" width="128" height="74"/>
+    </elements>
+</model>
