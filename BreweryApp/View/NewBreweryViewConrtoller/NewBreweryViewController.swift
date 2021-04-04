@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewBreweryViewController: UIViewController, UITextFieldDelegate {
+class NewBreweryViewController: UIViewController {
 
     @IBOutlet weak var imageBreweries: UIImageView!
     @IBOutlet weak var nameTexField: UITextField!
@@ -28,14 +28,21 @@ class NewBreweryViewController: UIViewController, UITextFieldDelegate {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBrewery))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         imageBreweries.isUserInteractionEnabled = true
         nameTexField.delegate = self
         descriptionTextField.delegate = self
         setupTapGestureRecognizer()
+        setupNavigationItem()
+        nameTexField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBrewery))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     func setupTapGestureRecognizer() {
@@ -45,7 +52,6 @@ class NewBreweryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func saveBrewery() {
-        
         var image: UIImage?
         
         if imageIsChanged {
@@ -68,7 +74,6 @@ class NewBreweryViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-    
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
@@ -84,12 +89,23 @@ class NewBreweryViewController: UIViewController, UITextFieldDelegate {
         
         present(actionSheet, animated: true)
     }
+}
+
+extension NewBreweryViewController: UITextFieldDelegate {
     
      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-
+    
+    @objc private func textFieldChanged() {
+        
+        if nameTexField.text?.isEmpty == false {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+    }
 }
 
 extension NewBreweryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

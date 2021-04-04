@@ -33,14 +33,18 @@ class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITa
         tableView.dataSource = self
         tableView.delegate = self
         safeArea = view.layoutMarginsGuide
-        navigationItem.title = "Breweries"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBrewerie))
         view.backgroundColor = .white
-        navigationItem.largeTitleDisplayMode = .always
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadBreweries"), object: nil)
         setupTableView()
+        setupNavigationItem()
         requestData()
-        tableView.reloadData()
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.title = "Breweries"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBrewerie))
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
     }
     
     @objc func loadList(notification: NSNotification) {
@@ -73,6 +77,7 @@ class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITa
         cell.titelLabel?.text = requestBrewery[indexPath.row]?.nameBrewery
         cell.descriptionLabel?.text = requestBrewery[indexPath.row]?.descriptionBrewery
         cell.breweriesImage.image = UIImage(data: (requestBrewery[indexPath.row]?.imageBrewery)!)
+        cell.selectionStyle = .none
         return cell
     }
     

@@ -30,13 +30,17 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
         tableView.dataSource = self
         tableView.delegate = self
         safeArea = view.layoutMarginsGuide
-        navigationItem.title = "Beer Grades"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBrewerie))
         view.backgroundColor = .white
         NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadBeers"), object: nil)
+        setupNavigationItem()
         setupTableView()
         requestData()
         tableView.reloadData()
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.title = "Beer List"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBrewerie))
     }
     
     @objc func loadList(notification: NSNotification) {
@@ -49,7 +53,7 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
         let vcBG = vc.viewControllers.first as? NewBeerGradeViewController
         vcBG!.brewery = breweries
         present(vc, animated: true)
-
+        
     }
     
     private func setupTableView() {
@@ -64,7 +68,7 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return requestBeerGrade.count
+        return requestBeerGrade.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,6 +76,7 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
         cell.titelLabel.text = requestBeerGrade[indexPath.row]?.nameBG
         cell.descriptionLabel.text = requestBeerGrade[indexPath.row]?.descriptionBG
         cell.breweriesImage.image = UIImage(data: (requestBeerGrade[indexPath.row]?.imageBG)!)
+        cell.selectionStyle = .none
         return cell
     }
     

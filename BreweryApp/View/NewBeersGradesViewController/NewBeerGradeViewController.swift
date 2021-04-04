@@ -7,14 +7,15 @@
 
 import UIKit
 
-class NewBeerGradeViewController: UIViewController, UITextFieldDelegate {
+class NewBeerGradeViewController: UIViewController {
     
     @IBOutlet weak var imageBeerGrade: UIImageView!
     @IBOutlet weak var nameTexField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     
     private let beersGradesStorageModel: BeerGradeStorageModel
-    public var imageIsChanged = false
+    private var imageIsChanged = false
+    
     public var brewery: ManagedBrewery?
     
     init(beersGradesStorageModel: BeerGradeStorageModel) {
@@ -28,12 +29,17 @@ class NewBeerGradeViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBrewery))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         nameTexField.delegate = self
         descriptionTextField.delegate = self
         setupTapGestureRecognizer()
-        
+        setupNavigationItem()
+        nameTexField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBeer))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
+        navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     func setupTapGestureRecognizer() {
@@ -42,10 +48,9 @@ class NewBeerGradeViewController: UIViewController, UITextFieldDelegate {
         imageBeerGrade.isUserInteractionEnabled = true
     }
     
-    @objc func saveBrewery() {
+    @objc func saveBeer() {
         var image: UIImage?
         guard let brewery = brewery else { return }
-        print(brewery.self)
         if imageIsChanged {
             image = imageBeerGrade.image
         } else {
@@ -66,7 +71,6 @@ class NewBeerGradeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
@@ -83,11 +87,22 @@ class NewBeerGradeViewController: UIViewController, UITextFieldDelegate {
         present(actionSheet, animated: true)
     }
     
+}
+
+extension NewBeerGradeViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    @objc private func textFieldChanged() {
+        if nameTexField.text?.isEmpty == false {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+    }
 }
 
 extension NewBeerGradeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

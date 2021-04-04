@@ -10,8 +10,8 @@ import CoreData
 
 protocol PersistenceStore {
     func getBreweries() -> [ManagedBrewery]
-    func saveBrewery(brewery: Brewery)
     func getBeersGrades() -> [ManagedBeersGrades]
+    func saveBrewery(brewery: Brewery)
     func saveBeerGrade(beerGrade: BeerGrade, brewery: ManagedBrewery)
 }
 
