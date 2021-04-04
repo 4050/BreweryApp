@@ -81,7 +81,6 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let vc = BeerDetailViewController()
         
         vc.nameLabelSting = requestBeerGrade[indexPath.row]?.nameBG

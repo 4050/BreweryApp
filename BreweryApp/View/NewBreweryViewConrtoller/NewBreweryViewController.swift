@@ -8,7 +8,7 @@
 import UIKit
 
 class NewBreweryViewController: UIViewController {
-
+    
     @IBOutlet weak var imageBreweries: UIImageView!
     @IBOutlet weak var nameTexField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
@@ -81,7 +81,7 @@ class NewBreweryViewController: UIViewController {
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-    
+        
         actionSheet.addAction(photo)
         actionSheet.addAction(cancel)
         
@@ -91,13 +91,12 @@ class NewBreweryViewController: UIViewController {
 
 extension NewBreweryViewController: UITextFieldDelegate {
     
-     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
     @objc private func textFieldChanged() {
-        
         if nameTexField.text?.isEmpty == false {
             navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
@@ -109,7 +108,6 @@ extension NewBreweryViewController: UITextFieldDelegate {
 extension NewBreweryViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
-        
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -121,11 +119,10 @@ extension NewBreweryViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         imageBreweries.image = info[.editedImage] as? UIImage
         imageBreweries.contentMode = .scaleAspectFill
         imageBreweries.clipsToBounds = true
-     
+        
         imageIsChanged = true
         imageIsChanged = true
         

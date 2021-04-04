@@ -16,10 +16,11 @@ struct BeerGrade {
 class BeerGradeStorageModel {
     
     private let storageBeerGrade: BreweryStorageService
+    
     init(storageBeerGrade: BreweryStorageService) {
         self.storageBeerGrade = storageBeerGrade
     }
-   
+    
     func getBeersGrades() -> [ManagedBeersGrades?] {
         let breweries = storageBeerGrade.getBeersGrades()
         return breweries

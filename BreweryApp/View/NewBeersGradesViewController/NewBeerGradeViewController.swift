@@ -108,7 +108,6 @@ extension NewBeerGradeViewController: UITextFieldDelegate {
 extension NewBeerGradeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func chooseImagePicker(source: UIImagePickerController.SourceType) {
-        
         if UIImagePickerController.isSourceTypeAvailable(source) {
             let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
@@ -120,7 +119,6 @@ extension NewBeerGradeViewController: UIImagePickerControllerDelegate, UINavigat
     
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         imageBeerGrade.image = info[.editedImage] as? UIImage
         imageBeerGrade.contentMode = .scaleAspectFill
         imageBeerGrade.clipsToBounds = true
