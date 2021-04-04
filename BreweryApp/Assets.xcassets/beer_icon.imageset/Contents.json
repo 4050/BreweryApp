@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "imagePlaceholder@2x.png",
+      "filename" : "beer_icon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "imagePlaceholder@3x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

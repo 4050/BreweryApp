@@ -16,7 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let storageBrewery = BreweryStorageService()
         let breweryModel = BreweryStorageModel(storageBrewery: storageBrewery)
-        let rootVC = ListBreweriesViewController(breweryStorageModel: breweryModel)
+        let beersGrades = BeerGradeStorageModel(storageBeerGrade: storageBrewery)
+        let rootVC = ListBreweriesViewController(breweryStorageModel: breweryModel, beersGradesStorageModel: beersGrades)
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         window?.rootViewController = UINavigationController(rootViewController: rootVC)

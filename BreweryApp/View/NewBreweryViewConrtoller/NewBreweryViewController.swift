@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewBreweryViewController: UIViewController {
+class NewBreweryViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var imageBreweries: UIImageView!
     @IBOutlet weak var nameTexField: UITextField!
@@ -31,10 +31,17 @@ class NewBreweryViewController: UIViewController {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveBrewery))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         imageBreweries.isUserInteractionEnabled = true
+        nameTexField.delegate = self
+        descriptionTextField.delegate = self
+        setupTapGestureRecognizer()
+        
+    }
+    
+    func setupTapGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         imageBreweries.addGestureRecognizer(tapGestureRecognizer)
-
+        imageBreweries.isUserInteractionEnabled = true
     }
     
     @objc func saveBrewery() {
@@ -44,7 +51,7 @@ class NewBreweryViewController: UIViewController {
         if imageIsChanged {
             image = imageBreweries.image
         } else {
-            image = #imageLiteral(resourceName: "imagePlaceholder")
+            image = UIImage(named: Constants.imageBrewery)
         }
         
         let imageData = image?.pngData()
@@ -52,7 +59,7 @@ class NewBreweryViewController: UIViewController {
         let brewery = Brewery(name: nameTexField.text, description: descriptionTextField.text, image: imageData)
         
         breweryStorageModel.saveBrewery(brewery: brewery)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadBreweries"), object: nil)
         dismiss(animated: true)
     }
     
@@ -76,6 +83,11 @@ class NewBreweryViewController: UIViewController {
         actionSheet.addAction(cancel)
         
         present(actionSheet, animated: true)
+    }
+    
+     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 
 }

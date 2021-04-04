@@ -14,6 +14,7 @@ struct Brewery {
 }
 
 class BreweryStorageModel {
+    
     private let storageBrewery: BreweryStorageService
     init(storageBrewery: BreweryStorageService) {
         self.storageBrewery = storageBrewery

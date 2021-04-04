@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ListBeersGradesViewController.swift
 //  BreweryApp
 //
 //  Created by Stanislav on 03.04.2021.
@@ -7,18 +7,16 @@
 
 import UIKit
 
-class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let tableView = UITableView()
     private var safeArea: UILayoutGuide!
     
-    private let breweryStorageModel: BreweryStorageModel
     private let beersGradesStorageModel: BeerGradeStorageModel
+    public var requestBeerGrade = [ManagedBeersGrades?]()
+    var breweries: ManagedBrewery?
     
-    private var requestBrewery = [ManagedBrewery?]()
-    
-    init(breweryStorageModel: BreweryStorageModel, beersGradesStorageModel: BeerGradeStorageModel) {
-        self.breweryStorageModel = breweryStorageModel
+    init(beersGradesStorageModel: BeerGradeStorageModel) {
         self.beersGradesStorageModel = beersGradesStorageModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -27,17 +25,15 @@ class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITa
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         safeArea = view.layoutMarginsGuide
-        navigationItem.title = "Breweries"
+        navigationItem.title = "Beer Grades"
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBrewerie))
         view.backgroundColor = .white
-        navigationItem.largeTitleDisplayMode = .always
-        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadBreweries"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadList), name: NSNotification.Name(rawValue: "loadBeers"), object: nil)
         setupTableView()
         requestData()
         tableView.reloadData()
@@ -49,8 +45,11 @@ class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     @objc func addBrewerie() {
-        let vc = UINavigationController(rootViewController: NewBreweryViewController(breweryStorageModel: breweryStorageModel))
+        let vc = UINavigationController(rootViewController: NewBeerGradeViewController(beersGradesStorageModel: beersGradesStorageModel))
+        let vcBG = vc.viewControllers.first as? NewBeerGradeViewController
+        vcBG!.brewery = breweries
         present(vc, animated: true)
+
     }
     
     private func setupTableView() {
@@ -65,27 +64,31 @@ class ListBreweriesViewController: UIViewController, UITableViewDataSource, UITa
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return requestBrewery.count
+       return requestBeerGrade.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseIdentifier, for: indexPath) as! TableViewCell
-        cell.titelLabel?.text = requestBrewery[indexPath.row]?.nameBrewery
-        cell.descriptionLabel?.text = requestBrewery[indexPath.row]?.descriptionBrewery
-        cell.breweriesImage.image = UIImage(data: (requestBrewery[indexPath.row]?.imageBrewery)!)
+        cell.titelLabel.text = requestBeerGrade[indexPath.row]?.nameBG
+        cell.descriptionLabel.text = requestBeerGrade[indexPath.row]?.descriptionBG
+        cell.breweriesImage.image = UIImage(data: (requestBeerGrade[indexPath.row]?.imageBG)!)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = ListBeersGradesViewController(beersGradesStorageModel: beersGradesStorageModel)
-        vc.modalPresentationStyle = .fullScreen
-        let breweries = self.requestBrewery[indexPath.row]
-        vc.breweries = breweries
+        
+        let vc = BeerDetailViewController()
+        
+        vc.nameLabelSting = requestBeerGrade[indexPath.row]?.nameBG
+        vc.descriptionLabelSting = requestBeerGrade[indexPath.row]?.descriptionBG
+        vc.imageBeer = UIImage(data: (requestBeerGrade[indexPath.row]?.imageBG)!)
+        
         navigationController?.pushViewController(vc, animated: true)
-      }
+        
+    }
     
     func requestData() {
-        requestBrewery = breweryStorageModel.getBreweries()
+        guard let beerGrade = breweries?.rowsBeerGrade?.allObjects as? [ManagedBeersGrades] else { return }
+        requestBeerGrade = beerGrade
     } 
 }
-

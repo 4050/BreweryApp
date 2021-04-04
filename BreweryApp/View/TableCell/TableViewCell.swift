@@ -7,13 +7,11 @@
 
 import UIKit
 
-class BreweriesTableViewCell: UITableViewCell {
+class TableViewCell: UITableViewCell {
     
     @IBOutlet weak var titelLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var breweriesImage: UIImageView!
-    
-    static let reuseIdentifier = "BreweriesCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
