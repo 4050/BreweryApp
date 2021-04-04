@@ -50,8 +50,8 @@ class ListBeersGradesViewController: UIViewController, UITableViewDataSource, UI
     
     @objc func addBrewerie() {
         let vc = UINavigationController(rootViewController: NewBeerGradeViewController(beersGradesStorageModel: beersGradesStorageModel))
-        let vcBG = vc.viewControllers.first as? NewBeerGradeViewController
-        vcBG!.brewery = breweries
+        guard let vcBG = vc.viewControllers.first as? NewBeerGradeViewController else { return }
+        vcBG.brewery = breweries
         present(vc, animated: true)
         
     }

@@ -14,7 +14,7 @@ class NewBeerGradeViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!
     
     private let beersGradesStorageModel: BeerGradeStorageModel
-    private var imageIsChanged = false
+    public var imageIsChanged = false
     
     public var brewery: ManagedBrewery?
     

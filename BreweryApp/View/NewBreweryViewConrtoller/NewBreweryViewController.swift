@@ -13,9 +13,8 @@ class NewBreweryViewController: UIViewController {
     @IBOutlet weak var nameTexField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     
-    var imageIsChanged = false
     private let breweryStorageModel: BreweryStorageModel
-    
+    public var imageIsChanged = false
     
     init(breweryStorageModel: BreweryStorageModel) {
         self.breweryStorageModel = breweryStorageModel
@@ -28,7 +27,6 @@ class NewBreweryViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         imageBreweries.isUserInteractionEnabled = true
         nameTexField.delegate = self
@@ -128,6 +126,7 @@ extension NewBreweryViewController: UIImagePickerControllerDelegate, UINavigatio
         imageBreweries.contentMode = .scaleAspectFill
         imageBreweries.clipsToBounds = true
      
+        imageIsChanged = true
         imageIsChanged = true
         
         dismiss(animated: true)
